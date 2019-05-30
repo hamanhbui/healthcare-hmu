@@ -1,0 +1,5 @@
+set sysroot /home/habui/tizen-studio/tools/smart-build-interface/../../platforms/tizen-5.0/wearable/rootstraps/wearable-5.0-emulator.core
+set debug-file-directory /home/habui/tizen-studio/tools/smart-build-interface/../../platforms/tizen-5.0/wearable/rootstraps/wearable-5.0-emulator.core/usr/lib/debug
+set solib-search-path /home/habui/TizenStudioProjects/LoggingWear/Debug
+dir /home/habui/tizen-studio/tools/smart-build-interface/../../platforms/tizen-5.0/wearable/rootstraps/wearable-5.0-emulator.core/usr/src/debug
+sharedlibrary

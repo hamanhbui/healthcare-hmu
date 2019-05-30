@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="5.0" package="org.example.loggingwear" version="1.0.0">
+	<profile name="wearable" />
+	<ui-application appid="org.example.loggingwear" exec="loggingwear" type="capp" multiple="false" taskmanage="true" nodisplay="false">
+		<icon>loggingwear.png</icon>
+		<label>loggingwear</label>
+	</ui-application>
+	<privileges>
+	    <privilege>http://tizen.org/privilege/bluetooth</privilege>
+	    <privilege>http://tizen.org/privilege/display</privilege>
+	    <privilege>http://tizen.org/privilege/power</privilege>
+	</privileges>
+</manifest>

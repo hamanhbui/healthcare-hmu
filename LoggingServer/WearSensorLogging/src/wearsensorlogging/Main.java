@@ -17,6 +17,7 @@ import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import org.jfree.ui.RefineryUtilities;
 
@@ -134,22 +135,31 @@ public class Main {
     private void device1SocketStreaming() {
          try {
             device1DatagramSocket = new DatagramSocket(5556);
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[10240];
             while(true){
                 DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
                 device1DatagramSocket.receive(receivePacket);
                 ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
                 ObjectInputStream ois = new ObjectInputStream(bais);
-                String data=(String) ois.readObject();
-                String[] splited = data.split("\\s+");
-                device1AcceData.x=Float.parseFloat(splited[1]);
-                device1AcceData.y=Float.parseFloat(splited[2]);
-                device1AcceData.z=Float.parseFloat(splited[3]);
-                device1GyroData.x=Float.parseFloat(splited[4]);
-                device1GyroData.y=Float.parseFloat(splited[5]);
-                device1GyroData.z=Float.parseFloat(splited[6]);
-                outputWriterDevice1.write(data + "\r\n");
-                System.out.println("Socket device 1: "+data);
+                ArrayList listData=(ArrayList) ois.readObject();
+                
+                for(int i=0;i<listData.size();++i){
+                    String data=(String) listData.get(i);
+                    String[] splited = data.split("\\s+");
+                    device1AcceData.x=Float.parseFloat(splited[1]);
+                    device1AcceData.y=Float.parseFloat(splited[2]);
+                    device1AcceData.z=Float.parseFloat(splited[3]);
+                    device1GyroData.x=Float.parseFloat(splited[4]);
+                    device1GyroData.y=Float.parseFloat(splited[5]);
+                    device1GyroData.z=Float.parseFloat(splited[6]);
+                    outputWriterDevice1.write(data + "\r\n");
+                    System.out.println("Socket device 1: "+data);
+                    long startTime2 = System.currentTimeMillis();
+                    long currentTime2 = startTime2;
+                    while (currentTime2 < startTime2 + 10) {
+                        currentTime2 = System.currentTimeMillis();
+                    }
+                }
             }
         }catch(Exception e){
 //            System.out.println(e.toString());
@@ -158,22 +168,31 @@ public class Main {
     private void device2SocketStreaming() {
         try {
             device2DatagramSocket = new DatagramSocket(5557);
-            byte[] buffer = new byte[2048];
+            byte[] buffer = new byte[10240];
             while(true){
                 DatagramPacket receivePacket = new DatagramPacket(buffer, buffer.length);
                 device2DatagramSocket.receive(receivePacket);
                 ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
                 ObjectInputStream ois = new ObjectInputStream(bais);
-                String data=(String) ois.readObject();
-                String[] splited = data.split("\\s+");
-                device2AcceData.x=Float.parseFloat(splited[1]);
-                device2AcceData.y=Float.parseFloat(splited[2]);
-                device2AcceData.z=Float.parseFloat(splited[3]);
-                device2GyroData.x=Float.parseFloat(splited[4]);
-                device2GyroData.y=Float.parseFloat(splited[5]);
-                device2GyroData.z=Float.parseFloat(splited[6]);
-                outputWriterDevice2.write(data + "\r\n");
-                System.out.println("Socket device 2: "+data);
+                ArrayList listData=(ArrayList) ois.readObject();
+                
+                for(int i=0;i<listData.size();++i){
+                    String data=(String) listData.get(i);
+                    String[] splited = data.split("\\s+");
+                    device2AcceData.x=Float.parseFloat(splited[1]);
+                    device2AcceData.y=Float.parseFloat(splited[2]);
+                    device2AcceData.z=Float.parseFloat(splited[3]);
+                    device2GyroData.x=Float.parseFloat(splited[4]);
+                    device2GyroData.y=Float.parseFloat(splited[5]);
+                    device2GyroData.z=Float.parseFloat(splited[6]);
+                    outputWriterDevice2.write(data + "\r\n");
+                    System.out.println("Socket device 2: "+data);
+                    long startTime2 = System.currentTimeMillis();
+                    long currentTime2 = startTime2;
+                    while (currentTime2 < startTime2 + 10) {
+                        currentTime2 = System.currentTimeMillis();
+                    }
+                }
             }
         }catch(Exception e){
 //            System.out.println(e.toString());

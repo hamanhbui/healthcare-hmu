@@ -18,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
@@ -161,6 +162,8 @@ public class SocketService extends Service {
     }
     public void runStreamingDevice1() {
         byte[] buff = new byte[128];
+        int count=0;
+        ArrayList listData=new ArrayList();
         while (true) {
             try {
                 bisDevice1.read(buff,0,buff.length);
@@ -172,19 +175,31 @@ public class SocketService extends Service {
                         break;
                 }
                 String dataVal = String.valueOf(chars,0,i);
-                ByteArrayOutputStream baos=new ByteArrayOutputStream();
-                ObjectOutputStream oos=new ObjectOutputStream(baos);
-                oos.writeObject(dataVal);
-                oos.flush();
-                byte[] buffer= baos.toByteArray();
-                DatagramPacket packet=new DatagramPacket(buffer,buffer.length, InetAddress.getByName(this.ipServer),5556);
-                socketDevice1DatagramSocket.send(packet);
-            } catch (final Exception e) {}
+                System.out.println("Device 1:"+dataVal);
+
+                listData.add(dataVal);
+                if(count>100) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ObjectOutputStream oos = new ObjectOutputStream(baos);
+                    oos.writeObject(listData);
+                    oos.flush();
+                    byte[] buffer = baos.toByteArray();
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5556);
+                    socketDevice1DatagramSocket.send(packet);
+                    count=0;
+                    listData.clear();
+                }
+                count++;
+            } catch (final Exception e) {
+                System.out.println(e.toString());
+            }
         }
     }
 
     public void runStreamingDevice2() {
         byte[] buff = new byte[128];
+        int count =0;
+        ArrayList listData=new ArrayList();
         while (true) {
             try {
                 bisDevice2.read(buff,0,buff.length);
@@ -196,15 +211,24 @@ public class SocketService extends Service {
                         break;
                 }
                 String dataVal = String.valueOf(chars,0,i);
-                ByteArrayOutputStream baos=new ByteArrayOutputStream();
-                ObjectOutputStream oos=new ObjectOutputStream(baos);
-                oos.writeObject(dataVal);
-                oos.flush();
-                byte[] buffer= baos.toByteArray();
-                DatagramPacket packet=new DatagramPacket(buffer,buffer.length, InetAddress.getByName(this.ipServer),5557);
-                socketDevice2DatagramSocket.send(packet);
+                System.out.println("Device 2:"+dataVal);
 
-            } catch (final Exception e) {}
+                listData.add(dataVal);
+                if(count>100) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    ObjectOutputStream oos = new ObjectOutputStream(baos);
+                    oos.writeObject(listData);
+                    oos.flush();
+                    byte[] buffer = baos.toByteArray();
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5557);
+                    socketDevice2DatagramSocket.send(packet);
+                    count=0;
+                    listData.clear();
+                }
+                count++;
+            } catch (final Exception e) {
+                System.out.println(e.toString());
+            }
         }
     }
 
