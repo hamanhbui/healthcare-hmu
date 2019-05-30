@@ -178,8 +178,8 @@ socket_connection_state_changed(int result, bt_socket_connection_state_e connect
 	     return;
 	 }
 
-//	 const char *service_uuid="00000000-0000-1000-8000-00805F9B34FB";
-	 const char *service_uuid="00000000-0000-1000-8000-77f199fd0834";
+	 const char *service_uuid="00000000-0000-1000-8000-00805F9B34FB";
+//	 const char *service_uuid="00000000-0000-1000-8000-77f199fd0834";
 	 const char *server_mac_address="90:E7:C4:F1:08:06";
 
 	 ret = bt_socket_connect_rfcomm(server_mac_address, service_uuid);
@@ -246,7 +246,7 @@ create_base_gui(appdata_s *ad)
 	/* Create an actual view of the base gui.
 	   Modify this part to change the view. */
 	ad->label = elm_label_add(ad->conform);
-	elm_object_text_set(ad->label, "<align=center>Hello Tizen</align>");
+	elm_object_text_set(ad->label, "<align=center>Recording..</align>");
 	evas_object_size_hint_weight_set(ad->label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	elm_object_content_set(ad->conform, ad->label);
 

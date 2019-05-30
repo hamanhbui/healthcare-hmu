@@ -1,3 +1,7 @@
 # ninja log v5
 0	401	0	src/loggingwear.o	9339c2ca54170868
 403	582	0	loggingwear	6a950de2fb149023
+1	665	0	src/loggingwear.o	9339c2ca54170868
+665	1066	0	loggingwear	6a950de2fb149023
+2	407	0	src/loggingwear.o	9339c2ca54170868
+408	597	0	loggingwear	6a950de2fb149023
