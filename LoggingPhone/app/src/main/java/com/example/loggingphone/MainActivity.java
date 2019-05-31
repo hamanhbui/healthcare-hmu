@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 socketServiceIntent = new Intent (MainActivity.this, SocketService.class);
                 socketServiceIntent.putExtra("IP",ipServer);
+                //Start the foreground service for bluetooth and UDP socket connections.
                 startService(socketServiceIntent);
             }
         });
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         device2ConnectionStateTV=findViewById(R.id.textViewDevice2Connection);
         closeFileBtn=findViewById(R.id.buttonCloseSocket);
 
+        //This is a handle action for create an UDP socket to the server.
         connectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                                 socket.close();
+                                //If connect successfully, start streaming.
                                 startActivityFromMainThread();
                             } else {
                                 socket.close();

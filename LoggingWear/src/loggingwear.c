@@ -36,7 +36,6 @@ bool adapter_bonded_device_cb(bt_device_info_s *device_info, void *user_data){
         dlog_print(DLOG_INFO, LOG_TAG, "The server device is found in bonded device list. address(%s)",
                    device_info->remote_address);
         bt_server_address = strdup(device_info->remote_address);
-        /* If you want to stop iterating, you can return "false" */
     }
     /* Get information about bonded device */
     int count_of_bonded_device = 1;
@@ -177,6 +176,8 @@ socket_connection_state_changed(int result, bt_socket_connection_state_e connect
 
 	     return;
 	 }
+
+	 //Create 2 sockets uuid correspond to 2 smartwatch bluetooth's services.
 
 	 const char *service_uuid="00000000-0000-1000-8000-00805F9B34FB";
 //	 const char *service_uuid="00000000-0000-1000-8000-77f199fd0834";

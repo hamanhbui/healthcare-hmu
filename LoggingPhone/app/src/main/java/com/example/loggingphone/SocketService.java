@@ -79,6 +79,7 @@ public class SocketService extends Service {
     }
 
     private void initBluetoothServerSocket() throws IOException {
+        //Create 2 sockets to 2 wears respectivelly.
         BluetoothAdapter blueAdapter = BluetoothAdapter.getDefaultAdapter();
         if (blueAdapter != null) {
             if (blueAdapter.isEnabled()) {
@@ -92,6 +93,7 @@ public class SocketService extends Service {
                     while(true){
                         try {
                             if(device1Socket==null) {
+                                //Waiting for the first device connection.
                                 device1Socket=mmServerSocketDevice1.accept();
                                 InputStream isDevice1 = device1Socket.getInputStream();
                                 bisDevice1=new BufferedInputStream(isDevice1);
@@ -104,6 +106,7 @@ public class SocketService extends Service {
                                 });
                             }
                             if(device2Socket==null) {
+                                //Waiting for the second device connection.
                                 device2Socket = mmServerSocketDevice2.accept();
                                 InputStream isDevice2=device2Socket.getInputStream();
                                 bisDevice2 = new BufferedInputStream(isDevice2);
@@ -116,7 +119,9 @@ public class SocketService extends Service {
                                 });
                             }
                             if(device1Socket!=null&&device2Socket!=null){
+                                //Once 2 devices connect successfully, create 2 UDP sockets to connect with the server. 
                                 createSocket();
+                                //Start 2 streamings by create 2 threads for 2 wearable devices.
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {

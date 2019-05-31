@@ -35,6 +35,7 @@ public class Main {
     private DatagramSocket device1DatagramSocket;
     private DatagramSocket device2DatagramSocket;
     public Main() {
+        //Waiting for the connectivity from the smart phone.
         System.out.println("Waiting for the connectivity....");
         try {
             ServerSocket serverSocket=new ServerSocket(5550);
@@ -53,7 +54,8 @@ public class Main {
         }catch(Exception e){
             System.out.println(e.toString());
         }
-        
+        //Once connect successfylly, create 2 streams to connect with the smart phone respectively,
+        //these streams from 2 different smart watch but transmit over smart phone.
         createFile();
         new Thread(new Runnable() {
             @Override
