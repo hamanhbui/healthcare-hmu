@@ -6,12 +6,13 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     public TextView device1ConnectionStateTV;
     public TextView device2ConnectionStateTV;
     public Button closeFileBtn;
+    public Button openSocketBtn;
 
+    public boolean startStreaming;
     private PowerManager.WakeLock mWakeLock;
     private WifiManager.WifiLock mWifiLock;
     private String ipServer;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         WifiManager wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "My Wifi Lock");
         mWifiLock.acquire();
+        this.startStreaming=false;
 
         initViews();
     }
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         device1ConnectionStateTV=findViewById(R.id.textViewDevice1Connection);
         device2ConnectionStateTV=findViewById(R.id.textViewDevice2Connection);
         closeFileBtn=findViewById(R.id.buttonCloseSocket);
+        openSocketBtn=findViewById(R.id.buttonOpenSocket);
 
         //This is a handle action for create an UDP socket to the server.
         connectBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +105,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).start();
 
+            }
+        });
+
+        openSocketBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                startStreaming=true;
+                serverConnectionStateTV.setText("Server connection state: Start streaming!");
+                device1ConnectionStateTV.setText("Device 1 connection state: Start streaming!");
+                device2ConnectionStateTV.setText("Device 2 connection state: Start streaming!");
             }
         });
 

@@ -179,8 +179,8 @@ socket_connection_state_changed(int result, bt_socket_connection_state_e connect
 
 	 //Create 2 sockets uuid correspond to 2 smartwatch bluetooth's services.
 
-	 const char *service_uuid="00000000-0000-1000-8000-00805F9B34FB";
-//	 const char *service_uuid="00000000-0000-1000-8000-77f199fd0834";
+//	 const char *service_uuid="00000000-0000-1000-8000-00805F9B34FB";
+	 const char *service_uuid="00000000-0000-1000-8000-77f199fd0834";
 	 const char *server_mac_address="90:E7:C4:F1:08:06";
 
 	 ret = bt_socket_connect_rfcomm(server_mac_address, service_uuid);

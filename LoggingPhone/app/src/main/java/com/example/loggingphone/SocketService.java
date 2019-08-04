@@ -8,8 +8,10 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -119,7 +121,7 @@ public class SocketService extends Service {
                                 });
                             }
                             if(device1Socket!=null&&device2Socket!=null){
-                                //Once 2 devices connect successfully, create 2 UDP sockets to connect with the server. 
+                                //Once 2 devices connect successfully, create 2 UDP sockets to connect with the server.
                                 createSocket();
                                 //Start 2 streamings by create 2 threads for 2 wearable devices.
                                 new Thread(new Runnable() {
@@ -134,24 +136,6 @@ public class SocketService extends Service {
                                         runStreamingDevice2();
                                     }
                                 }).start();
-                                MainActivity.instance.serverConnectionStateTV.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        MainActivity.instance.serverConnectionStateTV.setText("Server connection state: Start streaming!");
-                                    }
-                                });
-                                MainActivity.instance.device1ConnectionStateTV.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        MainActivity.instance.device1ConnectionStateTV.setText("Device 1 connection state: Start streaming!");
-                                    }
-                                });
-                                MainActivity.instance.device2ConnectionStateTV.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        MainActivity.instance.device2ConnectionStateTV.setText("Device 2 connection state: Start streaming!");
-                                    }
-                                });
                                 break;
                             }
                         } catch (IOException e) {
@@ -172,29 +156,31 @@ public class SocketService extends Service {
         while (true) {
             try {
                 bisDevice1.read(buff,0,buff.length);
-                String text = new String(buff, "UTF-8");
-                char[] chars = text.toCharArray();
-                int i;
-                for (i = 0; i < chars.length; i++) {
-                    if(chars[i]=='\0')
-                        break;
-                }
-                String dataVal = String.valueOf(chars,0,i);
-                System.out.println("Device 1:"+dataVal);
+                if(MainActivity.instance.startStreaming==true) {
+                    String text = new String(buff, "UTF-8");
+                    char[] chars = text.toCharArray();
+                    int i;
+                    for (i = 0; i < chars.length; i++) {
+                        if (chars[i] == '\0')
+                            break;
+                    }
+                    String dataVal = String.valueOf(chars, 0, i);
+                    System.out.println("Device 1:" + dataVal);
 
-                listData.add(dataVal);
-                if(count>100) {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ObjectOutputStream oos = new ObjectOutputStream(baos);
-                    oos.writeObject(listData);
-                    oos.flush();
-                    byte[] buffer = baos.toByteArray();
-                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5556);
-                    socketDevice1DatagramSocket.send(packet);
-                    count=0;
-                    listData.clear();
+                    listData.add(dataVal);
+                    if (count > 100) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ObjectOutputStream oos = new ObjectOutputStream(baos);
+                        oos.writeObject(listData);
+                        oos.flush();
+                        byte[] buffer = baos.toByteArray();
+                        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5556);
+                        socketDevice1DatagramSocket.send(packet);
+                        count = 0;
+                        listData.clear();
+                    }
+                    count++;
                 }
-                count++;
             } catch (final Exception e) {
                 System.out.println(e.toString());
             }
@@ -208,29 +194,31 @@ public class SocketService extends Service {
         while (true) {
             try {
                 bisDevice2.read(buff,0,buff.length);
-                String text = new String(buff, "UTF-8");
-                char[] chars = text.toCharArray();
-                int i;
-                for (i = 0; i < chars.length; i++) {
-                    if(chars[i]=='\0')
-                        break;
-                }
-                String dataVal = String.valueOf(chars,0,i);
-                System.out.println("Device 2:"+dataVal);
+                if(MainActivity.instance.startStreaming==true) {
+                    String text = new String(buff, "UTF-8");
+                    char[] chars = text.toCharArray();
+                    int i;
+                    for (i = 0; i < chars.length; i++) {
+                        if (chars[i] == '\0')
+                            break;
+                    }
+                    String dataVal = String.valueOf(chars, 0, i);
+                    System.out.println("Device 2:" + dataVal);
 
-                listData.add(dataVal);
-                if(count>100) {
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ObjectOutputStream oos = new ObjectOutputStream(baos);
-                    oos.writeObject(listData);
-                    oos.flush();
-                    byte[] buffer = baos.toByteArray();
-                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5557);
-                    socketDevice2DatagramSocket.send(packet);
-                    count=0;
-                    listData.clear();
+                    listData.add(dataVal);
+                    if (count > 100) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ObjectOutputStream oos = new ObjectOutputStream(baos);
+                        oos.writeObject(listData);
+                        oos.flush();
+                        byte[] buffer = baos.toByteArray();
+                        DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(ipServer), 5557);
+                        socketDevice2DatagramSocket.send(packet);
+                        count = 0;
+                        listData.clear();
+                    }
+                    count++;
                 }
-                count++;
             } catch (final Exception e) {
                 System.out.println(e.toString());
             }

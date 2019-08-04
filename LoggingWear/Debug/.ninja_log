@@ -5,3 +5,10 @@
 665	1066	0	loggingwear	6a950de2fb149023
 2	407	0	src/loggingwear.o	9339c2ca54170868
 408	597	0	loggingwear	6a950de2fb149023
+0	2	0	clean_cov	b3de405e02eb7ca8
+2	4	0	clean_sa	46ab9549445ac981
+4	8	0	clean	d59b6dac04fa9b5d
+1	455	0	src/loggingwear.o	9339c2ca54170868
+455	987	0	loggingwear	6a950de2fb149023
+2	408	0	src/loggingwear.o	9339c2ca54170868
+408	580	0	loggingwear	6a950de2fb149023
